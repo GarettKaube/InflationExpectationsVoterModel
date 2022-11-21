@@ -125,27 +125,6 @@ class VoterModel():
         return persons_expectation
 
 
-    def plot_average_expectation(self, expectations, iterations, predictions, i):
-        """Plots mean of expected inflation generated from voter model
-        Input:
-            expectations: array of floats of inflation expectations
-            iterations: array storing iterations/time that the voter model has gone through
-            predictions: array of predictions
-        """
-        fig = plt.figure()
-        ax = fig.add_axes([1,1,1,1])
-        x = np.arange(iterations)
-        plt.plot(x, expectations, label = f'Inflation Expectations for run{i}')
-        plt.plot(x, predictions, label = f'Predicted Inflation for run{i}')
-        plt.xlabel('Time/Iterations')
-        plt.ylabel('Inflation')
-        plt.legend()
-        plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
-        plt.show()
-        
-
-
-
     def predict_inflation(self, expectation, model = None, torch_ = False):
         """Regression model for predicting inflation in 5 years
         Input:
@@ -182,6 +161,24 @@ class VoterModel():
         rm = np.array(self.graph.matrix).astype(int)
         with open(f'./relation_matrices/relation_matrix{i}.txt',"w") as f:
             np.savetxt(f, rm, fmt = '%i')
+
+def save_plot(expectations, iterations, predictions, i):
+    """Plots mean of expected inflation generated from voter model and save
+    Input:
+        expectations: array of floats of inflation expectations
+        iterations: array storing iterations/time that the voter model has gone through
+        predictions: array of predictions
+    """
+    fig = plt.figure()
+    ax = fig.add_axes([1,1,1,1])
+    x = np.arange(iterations)
+    plt.plot(x, expectations, label = f'Inflation Expectations for run{i}')
+    plt.plot(x, predictions, label = f'Predicted Inflation for run{i}')
+    plt.xlabel('Time/Iterations')
+    plt.ylabel('Inflation')
+    plt.legend()
+    plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
+    
 
 
 
@@ -253,7 +250,7 @@ def main():
         print(i)
         if i % plot_every == 0:
             # plot results
-            voter.plot_average_expectation(expectations_over_iterations, num_of_iterations, predictions, i)
+            save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
         
 
     # plot final results from voter model runs
