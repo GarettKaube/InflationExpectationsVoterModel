@@ -14,4 +14,4 @@ vm.py arguments:
 5. --torch: use torch model, default = False/n
 
 
-Google Colab notebook: https://colab.research.google.com/drive/1I9kJMLVg3GqH2WddDxHzlaRe_hUua8ri?usp=sharing
+Google Colab notebook: https://colab.research.google.com/drive/1_A0GpLUeM5SXitBffwY6B324Xl-U9vMK?usp=sharing
