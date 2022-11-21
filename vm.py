@@ -260,8 +260,7 @@ def main():
     plt.xlabel('Voter model runs')
     plt.ylabel('Inflation')
     plt.legend()
-    plt.savefig('vm')
-
+    plt.savefig('vm', bbox_inches='tight')
 
 if __name__ == '__main__':
     main()
