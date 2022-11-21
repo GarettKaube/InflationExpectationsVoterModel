@@ -197,7 +197,13 @@ def main():
         loaded_model = pickle.load(open('./models/ridge_reg_model.sav', 'rb'))
     else:
         loaded_model = torch.load(r'./models/neural_2layers_sigmoid3.pth')
-
+    
+    print('Creating directory for relation matrices.')
+    try: 
+        os.mkdir('./relation_matrices') 
+    except OSError as error:
+        print('relation_matrices directory already exists') 
+    
     for i in range(runs):
         voter = VoterModel(n,m)
         
