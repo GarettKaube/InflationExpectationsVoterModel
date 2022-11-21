@@ -118,10 +118,10 @@ class VoterModel():
             randn = np.random.normal(0, 0.4115) # random normal for adjusting expectation
             if binn == 1:
                 
-                persons_expectation = persons_expectation + randn
+                persons_expectation = neighbors_expectations[i] + np.random.normal(0, 0.4115)
                 
             else:
-                persons_expectation = persons_expectation - randn
+                persons_expectation = persons_expectation - np.random.normal(0, 0.1)
         return persons_expectation
 
 
@@ -254,12 +254,14 @@ def main():
         
 
     # plot final results from voter model runs
+    fig = plt.figure()
+    ax = fig.add_axes([1,1,1,1])
     plt.plot(range(runs), average_expectations_per_run, label = 'average inflation expectation per-graph')
     plt.xlabel('Voter model runs')
     plt.ylabel('Inflation')
     plt.legend()
     plt.savefig('vm')
-    plt.show()
+
 
 if __name__ == '__main__':
     main()
