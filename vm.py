@@ -125,20 +125,25 @@ class VoterModel():
         return persons_expectation
 
 
-    def plot_average_expectation(self, expectations, iterations, predictions):
+    def plot_average_expectation(self, expectations, iterations, predictions, i):
         """Plots mean of expected inflation generated from voter model
         Input:
             expectations: array of floats of inflation expectations
             iterations: array storing iterations/time that the voter model has gone through
             predictions: array of predictions
         """
+        fig = plt.figure()
+        ax = fig.add_axes([1,1,1,1])
         x = np.arange(iterations)
-        plt.plot(x, expectations, label = 'Inflation Expectations')
-        plt.plot(x, predictions, label = 'Predicted Inflation')
+        plt.plot(x, expectations, label = f'Inflation Expectations for run{i}')
+        plt.plot(x, predictions, label = f'Predicted Inflation for run{i}')
         plt.xlabel('Time/Iterations')
         plt.ylabel('Inflation')
         plt.legend()
+        plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
         plt.show()
+        
+
 
 
     def predict_inflation(self, expectation, model = None, torch_ = False):
@@ -198,11 +203,19 @@ def main():
     else:
         loaded_model = torch.load(r'./models/neural_2layers_sigmoid3.pth')
     
-    print('Creating directory for relation matrices.')
+
+    print('Creating directory for relation matrices and plots.')
+
     try: 
         os.mkdir('./relation_matrices') 
     except OSError as error:
         print('relation_matrices directory already exists') 
+
+    try:
+        os.mkdir('./votermodelplots') 
+    except OSError as error:
+        print('votermodelplots directory already exists') 
+          
     
     for i in range(runs):
         voter = VoterModel(n,m)
@@ -240,7 +253,7 @@ def main():
         print(i)
         if i % plot_every == 0:
             # plot results
-            voter.plot_average_expectation(expectations_over_iterations, num_of_iterations, predictions)
+            voter.plot_average_expectation(expectations_over_iterations, num_of_iterations, predictions, i)
         
 
     # plot final results from voter model runs
