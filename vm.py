@@ -118,10 +118,10 @@ class VoterModel():
             randn = np.random.normal(0, 0.4115) # random normal for adjusting expectation
             if binn == 1:
                 
-                persons_expectation = neighbors_expectations[i] + np.random.normal(0, 0.4115)
+                persons_expectation = persons_expectation + randn
                 
             else:
-                persons_expectation = persons_expectation - np.random.normal(0, 0.1)
+                persons_expectation = persons_expectation - randn
         return persons_expectation
 
 
