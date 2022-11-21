@@ -5,7 +5,7 @@ Before running run:
 
 Run the file with prompt such as: "python vm.py --population 100 --edges 200 --data r --num_runs 50"
 
-vm arguments:
+vm.py arguments:
 
 1. --population: Number of nodes/individuals in model (int), default = 10
 2. --edges: Number of edges for random grap, population <= edges (int), default = 10
