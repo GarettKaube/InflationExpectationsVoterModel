@@ -162,6 +162,7 @@ class VoterModel():
         with open(f'./relation_matrices/relation_matrix{i}.txt',"w") as f:
             np.savetxt(f, rm, fmt = '%i')
 
+            
 def save_plot(expectations, iterations, predictions, i):
     """Plots mean of expected inflation generated from voter model and save
     Input:
@@ -179,8 +180,6 @@ def save_plot(expectations, iterations, predictions, i):
     plt.legend()
     plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
     
-
-
 
 def main():
     args = parser.parse_args()
@@ -215,7 +214,7 @@ def main():
           
     
     for i in range(runs):
-        voter = VoterModel(n,m)
+        voter = VoterModel(n,m) # create new random graph for run i
         
 
         # get initial expectations
@@ -256,7 +255,7 @@ def main():
     # plot final results from voter model runs
     fig = plt.figure()
     ax = fig.add_axes([1,1,1,1])
-    plt.plot(range(runs), average_expectations_per_run, label = 'average inflation expectation per-graph')
+    plt.plot(range(runs), average_expectations_per_run, label = 'average inflation expectation per-graph') # average inflation expectations for each graph
     plt.xlabel('Voter model runs')
     plt.ylabel('Inflation')
     plt.legend()
