@@ -105,7 +105,7 @@ class VoterModel():
         """
         persons_expectation = init_expectations[person]
         neighbors_expectations = init_expectations[neighbors] # array of neighbors expectations
-
+        person_expectation = np.mean(neighbors_expectations)
         for i in range(len(neighbors)):
             p = 0.7
             
