@@ -1,4 +1,4 @@
-# InflationExpectationsVoterModel
+# Inflation Expectations Voter Model
 
 Before running run:
 "pip install -r requirements.txt" in a terminal
