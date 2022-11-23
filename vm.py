@@ -163,7 +163,7 @@ class VoterModel():
             np.savetxt(f, rm, fmt = '%i')
 
             
-def save_plot(expectations, iterations, predictions, i,j):
+def save_plot(expectations, iterations, predictions, i):
     """Plots mean of expected inflation generated from voter model and save
     Input:
         expectations: array of floats of inflation expectations
@@ -178,7 +178,7 @@ def save_plot(expectations, iterations, predictions, i,j):
     plt.xlabel('Time/Iterations')
     plt.ylabel('Inflation')
     plt.legend()
-    plt.savefig(f'./votermodelplots/vm_fig{i} for run {j}',bbox_inches='tight')
+    plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
     
 
 def main():
@@ -249,7 +249,7 @@ def main():
         print(i)
         if i % plot_every == 0:
             # plot results
-            save_plot(expectations_over_iterations, num_of_iterations, predictions, i, j)
+            save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
         
 
     # plot final results from voter model runs
