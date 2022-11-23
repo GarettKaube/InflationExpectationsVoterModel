@@ -192,6 +192,8 @@ def main():
     plot_every = 10                         #plot mean inflation expectations every couple of runs
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
+    
+    std_per_run = []
 
     if torch_ == False:
         # polynomial degree 5 regression with l2 penalty lambda = 0.1
@@ -245,7 +247,11 @@ def main():
         # create relation matrices
         voter.export_relation_matrix(i)
         print(f"Final Inflation Expectations for run {i}:\n {init_expectations}")
-        average_expectations_per_run.append(np.mean(expectations_over_iterations))
+        mean = np.mean(expectations_over_iterations)
+        std = np.std(expectations_over_iterations)
+        average_expectations_per_run.append(mean)
+        print(f'Mean of inflation expectations for run {i}: {mean}/nStandard deviation for run {i}: {std}.')
+        sdt_per_run.append(std)
         print(i)
         if i % plot_every == 0:
             # plot results
@@ -260,6 +266,14 @@ def main():
     plt.ylabel('Inflation')
     plt.legend()
     plt.savefig('vm', bbox_inches='tight')
+    
+    fig2 = plt.figure()
+    ax = fig2.add_axes([1,1,1,1])
+    plt.plot(range(runs), std_per_run, label = 'std of inflation expectation per-graph') # average inflation expectations for each graph
+    plt.xlabel('Voter model runs')
+    plt.ylabel('std')
+    plt.legend()
+    plt.savefig('std', bbox_inches='tight')
 
 if __name__ == '__main__':
     main()
