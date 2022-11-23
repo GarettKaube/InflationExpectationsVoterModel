@@ -251,7 +251,7 @@ def main():
         std = np.std(expectations_over_iterations)
         average_expectations_per_run.append(mean)
         print(f'Mean of inflation expectations for run {i}: {mean}/nStandard deviation for run {i}: {std}.')
-        sdt_per_run.append(std)
+        std_per_run.append(std)
         print(i)
         if i % plot_every == 0:
             # plot results
