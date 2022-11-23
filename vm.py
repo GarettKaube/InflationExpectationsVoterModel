@@ -116,12 +116,12 @@ class VoterModel():
             # individuals neighbor influences their inflation expectation to change with p = 0.7 to add random normal and 1-p=0.3 to subtract random normal from original expectation
             binn = np.random.binomial(1, p, size = 1)[0] 
             randn = np.random.normal(0, 0.4115) # random normal for adjusting expectation
-            #if binn == 1:
+            if binn == 1:
                 
-            #    persons_expectation = persons_expectation + randn
+                persons_expectation = persons_expectation + randn
                 
-            #else:
-            persons_expectation = persons_expectation + randn
+            else:
+                persons_expectation = persons_expectation + randn
         return persons_expectation
 
 
