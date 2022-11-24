@@ -122,7 +122,7 @@ class VoterModel():
                 persons_expectation = persons_expectation + randn
                 
             else:
-                persons_expectation = persons_expectation + randn
+                persons_expectation = persons_expectation - randn
         return persons_expectation
 
 
