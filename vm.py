@@ -10,6 +10,7 @@ import argparse
 import pickle
 from sklearn.linear_model import ridge_regression
 import os
+import pandas as pd
 
 parser = argparse.ArgumentParser(description='Arguments for voter model', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--population", help="Number of nodes/individuals in model", default=10)
@@ -190,12 +191,15 @@ def main():
     m = int(args.edges)                     # must be >= than n
     torch_ = bool(args.torch)
     plot_every = 10                         #plot mean inflation expectations every couple of runs
+    num_of_iterations = 500                 # how long each voter model will run
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
     all_average_inflation_expectations = []
-    
+    arr = np.empty((runs,num_of_iterations)) 
     std_per_run = []
 
+     
+    
     if torch_ == False:
         # polynomial degree 5 regression with l2 penalty lambda = 0.1
         loaded_model = pickle.load(open('./models/ridge_reg_model.sav', 'rb'))
@@ -229,9 +233,10 @@ def main():
         print("Initial expectations:",  '\n' + '_'*100 + '\n', init_expectations, '\n' + '='*100 + '\n' + '_'*100)
 
 
-        num_of_iterations = 500            # how long the voter model will run
+        
         expectations_over_iterations = []  # keep track of mean inflation expectations over time
         predictions = []                   # keep track of predictons 
+             
 
         print('Calculating new inflation expectations...')
 
@@ -246,6 +251,8 @@ def main():
             else: 
                 predictions.append(voter.predict_inflation(mean_expectation, loaded_model))
 
+            arr[i,j] = mean_expectation # add inflation expectation
+
         # create relation matrices
         voter.export_relation_matrix(i)
         print(f"Final Inflation Expectations for run {i}:\n {init_expectations}")
@@ -257,7 +264,20 @@ def main():
         print(i)
         if i % plot_every == 0:
             # plot results
+
             save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
+
+    # plot average inflation expectation for each graph at iteration i
+    averages = arr.mean(axis=0)
+    print(averages.shape)
+    fig4 = plt.figure()
+    ax = fig4.add_axes([1,1,1,1])
+    plt.plot(range(num_of_iterations), averages, label = 'Inflation expectation') # average inflation expectations for each graph
+    plt.xlabel('iterations')
+    plt.ylabel('Inflation')
+    plt.legend()
+    plt.savefig('./votermodelplots/mean_per_it', bbox_inches='tight')
+
         
     #plot all inflation expectations for all random graphs
     fig3 = plt.figure()
@@ -277,7 +297,6 @@ def main():
     plt.legend()
     plt.savefig('./votermodelplots/mean', bbox_inches='tight')
     
-    #plot total standard deviations per-run
     fig2 = plt.figure()
     ax = fig2.add_axes([1,1,1,1])
     plt.plot(range(runs), std_per_run, label = 'std of inflation expectation per-graph') # average inflation expectations for each graph
