@@ -192,6 +192,7 @@ def main():
     plot_every = 10                         #plot mean inflation expectations every couple of runs
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
+    all_average_inflation_expectations = []
     
     std_per_run = []
 
@@ -239,6 +240,7 @@ def main():
             init_expectations = voter.Voter_Model(init_expectations)
             mean_expectation = np.mean(init_expectations)
             expectations_over_iterations.append(mean_expectation)
+            all_average_inflation_expectations.append(mean_expectation)
             if torch_ == True:
                 predictions.append(voter.predict_inflation(mean_expectation, loaded_model, torch_).detach().cpu().numpy()[0][0])
             else: 
@@ -257,6 +259,14 @@ def main():
             # plot results
             save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
         
+    #plot all inflation expectations for all random graphs
+    fig3 = plt.figure()
+    ax = fig3.add_axes([1,1,1,1])
+    plt.plot(range(runs*num_of_iterations), all_average_inflation_expectations, label = 'Inflation expectation') # average inflation expectations for each graph
+    plt.xlabel('iterations')
+    plt.ylabel('Inflation')
+    plt.legend()
+    plt.savefig('./votermodelplots/allmeaninfexp', bbox_inches='tight')
 
     # plot final results from voter model runs
     fig = plt.figure()
@@ -265,7 +275,7 @@ def main():
     plt.xlabel('Voter model runs')
     plt.ylabel('Inflation')
     plt.legend()
-    plt.savefig('vm', bbox_inches='tight')
+    plt.savefig('./votermodelplots/mean', bbox_inches='tight')
     
     fig2 = plt.figure()
     ax = fig2.add_axes([1,1,1,1])
@@ -273,7 +283,7 @@ def main():
     plt.xlabel('Voter model runs')
     plt.ylabel('std')
     plt.legend()
-    plt.savefig('std', bbox_inches='tight')
+    plt.savefig('./votermodelplots/std', bbox_inches='tight')
 
 if __name__ == '__main__':
     main()
