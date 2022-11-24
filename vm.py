@@ -10,7 +10,7 @@ import argparse
 import pickle
 from sklearn.linear_model import ridge_regression
 import os
-import pandas as pd
+
 
 parser = argparse.ArgumentParser(description='Arguments for voter model', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument("--population", help="Number of nodes/individuals in model", default=10)
