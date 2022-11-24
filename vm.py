@@ -196,7 +196,7 @@ def main():
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
     all_average_inflation_expectations = []
     arr = np.empty((runs,num_of_iterations)) # table for keeping track of inflation expectations across all runs and iterations for plotting purposes 
-    std_per_run = []
+    
 
      
     
@@ -279,31 +279,8 @@ def main():
     plt.savefig('./votermodelplots/mean_per_it', bbox_inches='tight')
 
         
-    #plot all inflation expectations for all random graphs
-    fig3 = plt.figure()
-    ax = fig3.add_axes([1,1,1,1])
-    plt.plot(range(runs*num_of_iterations), all_average_inflation_expectations, label = 'Inflation expectation') # average inflation expectations for each graph
-    plt.xlabel('iterations')
-    plt.ylabel('Inflation')
-    plt.legend()
-    plt.savefig('./votermodelplots/allmeaninfexp', bbox_inches='tight')
 
-    # plot final results from voter model runs
-    fig = plt.figure()
-    ax = fig.add_axes([1,1,1,1])
-    plt.plot(range(runs), average_expectations_per_run, label = 'average inflation expectation per-graph') # average inflation expectations for each graph
-    plt.xlabel('Voter model runs')
-    plt.ylabel('Inflation')
-    plt.legend()
-    plt.savefig('./votermodelplots/mean', bbox_inches='tight')
-    
-    fig2 = plt.figure()
-    ax = fig2.add_axes([1,1,1,1])
-    plt.plot(range(runs), std_per_run, label = 'std of inflation expectation per-graph') # average inflation expectations for each graph
-    plt.xlabel('Voter model runs')
-    plt.ylabel('std')
-    plt.legend()
-    plt.savefig('./votermodelplots/std', bbox_inches='tight')
+
 
 if __name__ == '__main__':
     main()
