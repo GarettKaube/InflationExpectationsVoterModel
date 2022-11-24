@@ -252,7 +252,7 @@ def main():
         mean = np.mean(expectations_over_iterations)
         std = np.std(expectations_over_iterations)
         average_expectations_per_run.append(mean)
-        print(f'Mean of inflation expectations for run {i}: {mean} /nStandard deviation for run {i}: {std}.')
+        print(f'Mean of inflation expectations for run {i}: {mean} \nStandard deviation for run {i}: {std}.')
         std_per_run.append(std)
         print(i)
         if i % plot_every == 0:
@@ -277,6 +277,7 @@ def main():
     plt.legend()
     plt.savefig('./votermodelplots/mean', bbox_inches='tight')
     
+    #plot total standard deviations per-run
     fig2 = plt.figure()
     ax = fig2.add_axes([1,1,1,1])
     plt.plot(range(runs), std_per_run, label = 'std of inflation expectation per-graph') # average inflation expectations for each graph
