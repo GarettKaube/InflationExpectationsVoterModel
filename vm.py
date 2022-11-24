@@ -195,7 +195,7 @@ def main():
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
     all_average_inflation_expectations = []
-    arr = np.empty((runs,num_of_iterations)) 
+    arr = np.empty((runs,num_of_iterations)) # table for keeping track of inflation expectations across all runs and iterations for plotting purposes 
     std_per_run = []
 
      
