@@ -269,7 +269,6 @@ def main():
 
     # plot average inflation expectation for each graph at iteration i
     averages = arr.mean(axis=0)
-    print(averages.shape)
     fig4 = plt.figure()
     ax = fig4.add_axes([1,1,1,1])
     plt.plot(range(num_of_iterations), averages, label = 'Inflation expectation') # average inflation expectations for each graph
