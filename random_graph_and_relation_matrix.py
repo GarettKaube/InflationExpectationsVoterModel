@@ -2,7 +2,6 @@ import random
 
 
 class Graph:
-    # reference: lecture 16
     def __init__(self, n=0, m=50):
         self.verticies = {}
 
@@ -97,7 +96,6 @@ class Graph:
         return self.matrix
 
 class Vertex:
-    # reference: lecture 16
     def __init__(self, key):
         self.key = key
         self.neighbors = {}
