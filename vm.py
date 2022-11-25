@@ -44,7 +44,7 @@ class Net(nn.Module):
 class VoterModel():
     def __init__(self, n, m):
         self.n = n          # height of matrix
-        self.m = m          # width of matrtix
+        self.m = m          # number of edges
         self.graph = Graph(n,m) # random graph
 
 
