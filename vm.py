@@ -109,7 +109,6 @@ class VoterModel():
         persons_expectation = np.mean(neighbors_expectations)
         for i in range(len(neighbors)):
             p = 0.7
-            
             #increase probability of expectations going up if expectations are below zero
             if persons_expectation < 0:
                 p = 0.9
@@ -117,12 +116,11 @@ class VoterModel():
             # individuals neighbor influences their inflation expectation to change with p = 0.7 to add random normal and 1-p=0.3 to subtract random normal from original expectation
             binn = np.random.binomial(1, p, size = 1)[0] 
             randn = np.random.normal(0, 0.4115) # random normal for adjusting expectation
-            if binn == 1:
-                
+            if binn == 1:      
                 persons_expectation = persons_expectation + randn
-                
             else:
                 persons_expectation = persons_expectation - randn
+                
         return persons_expectation
 
 
@@ -190,7 +188,7 @@ def main():
     n = int(args.population)                # number of individuals
     m = int(args.edges)                     # must be >= than n
     torch_ = bool(args.torch)
-    plot_every = 10                         #plot mean inflation expectations every couple of runs
+    plot_every = 10                         #plot mean inflation expectations every couple of runs, change if you want more plots
     num_of_iterations = 500                 # how long each voter model will run
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
@@ -223,7 +221,6 @@ def main():
     for i in range(runs):
         voter = VoterModel(n,m) # create new random graph for run i
         
-
         # get initial expectations
         if inp == 'p':
             init_expectations = voter.get_initial_expectations()
@@ -233,7 +230,6 @@ def main():
         print("Initial expectations:",  '\n' + '_'*100 + '\n', init_expectations, '\n' + '='*100 + '\n' + '_'*100)
 
 
-        
         expectations_over_iterations = []  # keep track of mean inflation expectations over time
         predictions = []                   # keep track of predictons 
              
@@ -251,7 +247,7 @@ def main():
             else: 
                 predictions.append(voter.predict_inflation(mean_expectation, loaded_model))
 
-            arr[i,j] = mean_expectation # add inflation expectation
+            arr[i,j] = mean_expectation     # add inflation expectation to collection 
 
         # create relation matrices
         voter.export_relation_matrix(i)
