@@ -84,12 +84,7 @@ class VoterModel():
         matrix = np.array(self.graph.get_relation_matrix())
         # adjust expectations
         for i in range(self.n):
-            neighbors = []
-            for j in range(self.n):
-                if matrix[i, j] == 1:
-                    # if i is related to j add j to neighbors
-                    neighbors.append(j)
-
+            neighbors = np.where(matrix[i] == 1)
             new_expectation = self.adjust_expectation(i, neighbors, init_expectations)
             init_expectations_copy[i] = new_expectation
             
