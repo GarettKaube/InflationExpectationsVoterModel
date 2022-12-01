@@ -18,6 +18,7 @@ parser.add_argument("--edges", help="Number of edges for random graph, n>=m", de
 parser.add_argument("--data",help="r or p where r=random initial expectations, p=predifined data in text file.", default='r')
 parser.add_argument("--num_runs",help="number of runs for the voter model", default='10')
 parser.add_argument("--torch",help="use torch model" , default=False)
+parser.add_argument("--iterations",help="number of iterations per votermodel" , default=500)
 
 # this is here so we can load a regression neural network for the voter model 
 class Net(nn.Module):
@@ -184,7 +185,7 @@ def main():
     m = int(args.edges)                     # must be >= than n
     torch_ = bool(args.torch)
     plot_every = 10                         #plot mean inflation expectations every couple of runs, change if you want more plots
-    num_of_iterations = 500                 # how long each voter model will run
+    num_of_iterations = int(args.iterations)                # how long each voter model will run
 
     average_expectations_per_run = []       # keep track of mean inflation expectations per run of the voter model
     all_average_inflation_expectations = []
@@ -274,5 +275,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
