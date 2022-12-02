@@ -12,6 +12,6 @@ vm.py arguments:
 3. --data: r or p where r=random initial expectations, p=predifined data in text file, default = r
 4. --num_runs: number of runs for the voter model, default = 10
 5. --torch: use pytorch model, default = False/n
-
+6. --iterations: Number of iterations per run of the voter model, default = 500
 
 Google Colab notebook: https://colab.research.google.com/drive/1_A0GpLUeM5SXitBffwY6B324Xl-U9vMK?usp=sharing
