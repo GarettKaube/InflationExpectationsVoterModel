@@ -181,7 +181,7 @@ def save_plot(expectations, iterations, predictions, i):
     plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
 
 
-def plot_hist(expectations, i, iteration, mean, std, final=False, allexp=False, nbins=10):
+def plot_hist(expectations, i, iteration, mean, std, final=False, allexp=False, nbins=20):
     """
     Plots histogram and gaussian kernel density estimate for inflation expectations
     """
@@ -306,7 +306,7 @@ def main():
             save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
     
     arr_reshaped = arr.reshape(arr.size,1).squeeze()
-    plot_hist(arr_reshaped, 1, iteration=num_of_iterations*runs, allexp=True, nbins=20, mean=np.mean(arr_reshaped), std=np.std(arr_reshaped))
+    plot_hist(arr_reshaped, 1, iteration=num_of_iterations*runs, allexp=True, nbins=30, mean=np.mean(arr_reshaped), std=np.std(arr_reshaped))
     
 
     # plot average inflation expectation for each graph at iteration i
