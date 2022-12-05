@@ -9,7 +9,7 @@ vm.py arguments:
 
 1. --population: Number of nodes/individuals in model (int), default = 10
 2. --edges: Number of edges for random grap, population <= edges (int), default = 10
-3. --data: r or p where r=random initial expectations, p=predifined data in text file, default = r
+3. --data: rn, rexp or p where rn= normally distributed expectations, rexp= exponetially distributed expectations, p=predifined data in text file, default = rn
 4. --num_runs: number of runs for the voter model, default = 10
 5. --torch: use pytorch model, default = False/n
 6. --iterations: Number of iterations per run of the voter model, default = 500
