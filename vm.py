@@ -70,7 +70,7 @@ class VoterModel():
         if dist == 'rn':
             random_expectations = np.random.normal(2, 0.4, size = self.n)
         elif dist =='rexp':
-            random_expectations = np.random.exponential(2, size = self.n)
+            random_expectations = 8-np.random.exponential(2, size = self.n)
         else:
             raise ValueError("Invalid input for data")
         return random_expectations
