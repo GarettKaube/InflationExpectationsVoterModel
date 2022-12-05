@@ -181,11 +181,11 @@ def save_plot(expectations, iterations, predictions, i):
     plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
 
 
-def plot_hist(expectations, i, iteration, final=False):
+def plot_hist(expectations, i, iteration, final=False, allexp=False, nbins=10):
     """
     Plots histogram and gaussian kernel density estimate for inflation expectations
     """
-    
+
     density = gaussian_kde(expectations)
     x = np.linspace(np.min(expectations),np.max(expectations), len(expectations))
 
@@ -194,7 +194,7 @@ def plot_hist(expectations, i, iteration, final=False):
     except OSError as error:
         pass
 
-    counts, bins = np.histogram(expectations, bins=10)
+    counts, bins = np.histogram(expectations, bins=nbins)
     fig = plt.figure()
     ax = fig.add_axes([1,1,1,1])
     plt.hist(bins[:-1], bins, weights=counts,density=True)
@@ -203,9 +203,12 @@ def plot_hist(expectations, i, iteration, final=False):
     plt.legend()
     if final:
         plt.savefig(f'./votermodelplots/distributions/run{i}/vm_fig_final_run{i}',bbox_inches='tight')
+    elif allexp:
+        plt.savefig(f'./votermodelplots/distributions/vm_fig_all_expectations',bbox_inches='tight')
     else:
         plt.savefig(f'./votermodelplots/distributions/run{i}/vm_fig_run_{i}_iteration_{iteration}',bbox_inches='tight')
     plt.close()
+
 
 def main():
     args = parser.parse_args()
@@ -223,8 +226,6 @@ def main():
     arr = np.empty((runs,num_of_iterations)) # table for keeping track of inflation expectations across all runs and iterations for plotting purposes 
     
 
-     
-    
     if torch_ == False:
         # polynomial degree 5 regression with l2 penalty lambda = 0.1
         loaded_model = pickle.load(open('./models/ridge_reg_model.sav', 'rb'))
@@ -302,7 +303,9 @@ def main():
             # plot results
 
             save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
-            
+    
+    plot_hist(arr.reshape(arr.size,1).squeeze(), 1, iteration=num_of_iterations*runs, allexp=True, nbins=20)
+
 
     # plot average inflation expectation for each graph at iteration i
     averages = arr.mean(axis=0)
