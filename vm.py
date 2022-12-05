@@ -71,6 +71,8 @@ class VoterModel():
             random_expectations = np.random.normal(2, 0.4, size = self.n)
         elif dist =='rexp':
             random_expectations = np.random.exponential(2, size = self.n)
+        else:
+            raise ValueError("Invalid input for data")
         return random_expectations
 
 
@@ -159,7 +161,7 @@ class VoterModel():
         with open(f'./relation_matrices/relation_matrix{i}.txt',"w") as f:
             np.savetxt(f, rm, fmt = '%i')
 
-            
+
 def save_plot(expectations, iterations, predictions, i):
     """Plots mean of expected inflation generated from voter model and save
     Input:
