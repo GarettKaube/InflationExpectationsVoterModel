@@ -62,13 +62,15 @@ class VoterModel():
         return initial_expectations
 
 
-    def random_initial_expectations(self):
+    def random_initial_expectations(self, dist):
         """Generates random normal(2, 0.4) inflation expectations
         Returns: 
             array of initial expectations
         """
-
-        random_expectations = np.random.normal(2, 0.4, size = self.n)
+        if dist == 'rn':
+            random_expectations = np.random.normal(2, 0.4, size = self.n)
+        elif dist =='rexp':
+            random_expectations = np.random.exponential(2, size = self.n)
         return random_expectations
 
 
@@ -221,7 +223,7 @@ def main():
         if inp == 'p':
             init_expectations = voter.get_initial_expectations()
         else:
-            init_expectations = voter.random_initial_expectations()
+            init_expectations = voter.random_initial_expectations(inp)
 
         print("Initial expectations:",  '\n' + '_'*100 + '\n', init_expectations, '\n' + '='*100 + '\n' + '_'*100)
 
@@ -275,4 +277,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
