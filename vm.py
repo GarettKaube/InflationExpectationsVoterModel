@@ -205,7 +205,7 @@ def plot_hist(expectations, i, iteration, final=False):
         plt.savefig(f'./votermodelplots/distributions/run{i}/vm_fig_final_run{i}',bbox_inches='tight')
     else:
         plt.savefig(f'./votermodelplots/distributions/run{i}/vm_fig_run_{i}_iteration_{iteration}',bbox_inches='tight')
-
+    plt.close()
 
 def main():
     args = parser.parse_args()
