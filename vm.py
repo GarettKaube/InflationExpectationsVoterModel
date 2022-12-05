@@ -181,7 +181,7 @@ def save_plot(expectations, iterations, predictions, i):
     plt.savefig(f'./votermodelplots/vm_fig{i}',bbox_inches='tight')
 
 
-def plot_hist(expectations, i, iteration, final=False, allexp=False, nbins=10):
+def plot_hist(expectations, i, iteration, mean, std, final=False, allexp=False, nbins=10):
     """
     Plots histogram and gaussian kernel density estimate for inflation expectations
     """
@@ -199,7 +199,7 @@ def plot_hist(expectations, i, iteration, final=False, allexp=False, nbins=10):
     ax = fig.add_axes([1,1,1,1])
     plt.hist(bins[:-1], bins, weights=counts,density=True)
     plt.xlabel('Inflation expectaions')
-    plt.plot(x, density(x), label = 'Kernel density estimate')
+    plt.plot(x, density(x), label = f'Kernel density estimate\nmean: {mean}\nstd: {std}')
     plt.legend()
     if final:
         plt.savefig(f'./votermodelplots/distributions/run{i}/vm_fig_final_run{i}',bbox_inches='tight')
@@ -269,7 +269,7 @@ def main():
 
         print('Calculating new inflation expectations...')
         
-        plot_hist(init_expectations, i, final=False, iteration="initial")
+        plot_hist(init_expectations, i, final=False, iteration="initial", mean= np.mean(init_expectations), std = np.std(init_expectations))
 
         # run voter model
         for j in range(num_of_iterations):
@@ -286,15 +286,16 @@ def main():
             arr[i,j] = mean_expectation     # add inflation expectation to collection 
 
             if j % 200 == 0:
-                plot_hist(init_expectations, i, iteration = j)
+                plot_hist(init_expectations, i, iteration = j, mean = mean_expectation, std = np.std(init_expectations))
 
-        plot_hist(init_expectations, i, final=True, iteration = num_of_iterations)
+        
 
         # create relation matrices
         voter.export_relation_matrix(i)
         print(f"Final Inflation Expectations for run {i}:\n {init_expectations}")
         mean = np.mean(expectations_over_iterations)
         std = np.std(expectations_over_iterations)
+        plot_hist(init_expectations, i, final=True, mean=mean, std=std, iteration = num_of_iterations)
        
         print(f'Mean of inflation expectations for run {i}: {mean} \nStandard deviation for run {i}: {std}.')
         
@@ -304,8 +305,9 @@ def main():
 
             save_plot(expectations_over_iterations, num_of_iterations, predictions, i)
     
-    plot_hist(arr.reshape(arr.size,1).squeeze(), 1, iteration=num_of_iterations*runs, allexp=True, nbins=20)
-
+    arr_reshaped = arr.reshape(arr.size,1).squeeze()
+    plot_hist(arr_reshaped, 1, iteration=num_of_iterations*runs, allexp=True, nbins=20, mean=np.mean(arr_reshaped), std=np.std(arr_reshaped))
+    
 
     # plot average inflation expectation for each graph at iteration i
     averages = arr.mean(axis=0)
