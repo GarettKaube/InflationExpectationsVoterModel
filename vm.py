@@ -69,7 +69,7 @@ class VoterModel():
             array of initial expectations
         """
         if dist == 'rn':
-            random_expectations = np.random.normal(2, 0.4, size = self.n)
+            random_expectations = np.random.normal(2, 0.4115, size = self.n)
         elif dist =='rexp':
             random_expectations = 8 - np.random.exponential(2, size = self.n)
         else:
