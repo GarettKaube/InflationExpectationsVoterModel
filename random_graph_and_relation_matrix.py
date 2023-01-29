@@ -1,3 +1,5 @@
+# Coded by Yifei Huang and Lu Zhang
+
 import random
 
 
